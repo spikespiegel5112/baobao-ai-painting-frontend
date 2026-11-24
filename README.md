@@ -1,83 +1,81 @@
-# chat-sd-frontend
+# Baobao AI Painting Frontend
 
-# 线上地址(登陆 WiFi：HTHX_unitrust)
+A Stable Diffusion image-generation frontend built with Vue 3 and Vite. It provides text-to-image, image-to-image/inpainting, and gallery features, and calls the backend API to use the SDXL, SD3, and Flux models.
 
-- http://10.8.18.103:18081/stablediffusion/
-- http://10.8.18.103:18081/stablediffusion-admin/
+## Features
 
-# stable-diffusion 的 github，包含 api
+- **Text-to-image**: Write prompts and generate images with SDXL, SD3, or Flux.
+- **Image-to-image and inpainting**: Create variations from existing images and regenerate selected regions.
+- **Generation progress**: Track generation status and cancel tasks in progress.
+- **Gallery**: Browse generated images.
+- **Responsive interface**: Supports desktop and mobile layouts, with dark theme styles.
 
-- https://github.com/CompVis/stable-diffusion
+## Tech Stack
 
-# stable-diffusion 模型的地址，包含调用方法
+- Vue 3, TypeScript, Vue Router, Vuex
+- Vite
+- Element Plus, Ant Design Vue
+- Axios, Sass
 
-- https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0
+## Prerequisites
 
-# Diffusers is the go-to library for state-of-the-art pretrained diffusion models for generating images, audio, and even 3D structures of molecules.
+- Node.js (a currently maintained LTS version is recommended)
+- Yarn
+- Access to the companion image-generation backend API
 
-- https://github.com/huggingface/diffusers
+## Installation and Development
 
-# pyTorch 官网
+```bash
+yarn install
+yarn dev
+```
 
-- https://pytorch.org/
+Vite starts the development server and prints the local URL in the terminal.
 
-# 作画项目示例
+## Environment Configuration
 
-- https://app.leonardo.ai/
-- https://civitai.com/
-- https://www.freedidi.com/10041.html
+The project uses `.env.development`, `.env.test`, `.env.production`, and `.env.qudongkeji` for different environments. Configure the backend URL with `VITE_BASE_URL` for the target environment. In development, Vite proxies `/chatsdapi` requests to this backend. For how API URLs are handled in test, production, and other environments, see `src/utils/service.ts`.
 
-# 带 api 启动命令
+Do not commit secrets or sensitive credentials to the repository.
 
-- webui-user.bat
-- http://127.0.0.1:7860/docs
+## Common Commands
 
-# stability 针对 webui 的扩展
+| Command | Description |
+| --- | --- |
+| `yarn dev` | Start the default development environment |
+| `yarn dev:test` | Start the development server in test mode |
+| `yarn build` | Build for the default production environment |
+| `yarn build:development` | Build in development mode |
+| `yarn build:qudongkeji` | Build in qudongkeji mode |
+| `yarn preview` | Preview the build locally |
+| `yarn typecheck` | Run Vue and TypeScript type checks |
+| `yarn lint` | Format the code and run ESLint |
 
-- Stability API Extension for Automatic1111 WebUI
-  https://github.com/Stability-AI/webui-stability-api
+## Pages
 
-# 提示语专门网站
+- `/Txt2Img`: Text-to-image (default home page)
+- `/Img2Img`: Image-to-image and inpainting
+- `/Gallery`: Image gallery
 
-- https://prompthero.com/
+The router uses Vue Router's Hash History mode.
 
-# 内网开源图片生成平台
+## Project Structure
 
-- http://10.8.18.103:7860/
+```text
+src/
+├── api/          # Backend API clients (authentication, users, SDXL, SD3, Flux, etc.)
+├── assets/       # Images and fonts
+├── components/   # Reusable components (if present)
+├── data/         # Demo data, including images
+├── router/       # Route configuration
+├── store/        # Vuex state management
+├── utils/        # Request services and shared utilities
+└── views/        # Pages and feature components
+    ├── Gallery/  # Image gallery
+    ├── Img2Img/  # Image-to-image and inpainting
+    └── Txt2Img/  # Text-to-image
+```
 
-# sdxl 下载地址
+## Backend Requirements
 
-- https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/tree/main
-
-# Stable Diffision 最新模型 SDXL 1.0 使用全教程
-
-- https://zhuanlan.zhihu.com/p/646885743
-
-# SDXL 读取本地大模型
-
-- https://aistudio.baidu.com/projectdetail/6645370
-
-# 环境配置相关文章
-
-- https://www.freedidi.com/10041.html
-  AI 绘画神器：SD XL 1.0 重磅更新！免费开源可商用（附在线使用+本地部署教程)
-- https://it.cha138.com/nginx/show-4623870.html
-  AI 绘画——使用 stable-diffusion 生成图片时提示 RuntimeError: CUDA out of memory 处理方法
-- https://zhuanlan.zhihu.com/p/617905470
-  【AI 科普】Stable Diffusion 显存不够用的拯救者插件
-- http://shiyanjun.cn/archives/2161.html
-  体验 Stable Diffusion 模型（v2、SDXL 1.0、Refiner 1.0）生成图像
-- https://zhuanlan.zhihu.com/p/632025155
-  手把手教你用 Stable Diffusion 写好提示词
-- https://www.zhihu.com/question/606155300
-  stable diffusion 出图效果差，改 vae 也没用怎么办？
-- https://zhuanlan.zhihu.com/p/650111012
-  德里克文：用 ChatGPT 辅助 Stable Diffusion 提示词生成
-- https://zhuanlan.zhihu.com/p/636070971
-  发愁不会写 stable diffusion 提示词？ 收藏这篇提示词合集就够了
-- https://prompthero.com/
-  提示词网站
-- https://zhuanlan.zhihu.com/p/86730433
-  这 20 个 ai 绘画提示词网站，能让你成为 prompt 高手。
-- https://junyao.tech/posts/b7c25ffc.html#Pose-%E5%A7%BF%E5%8A%BF
-  Stable Diffusion 之 Prompt 篇
+This frontend requires the companion image-generation API. Model inference, model files, and task queues are provided by the backend. Before using generation features, make sure the backend URL and authentication are configured and the model service is available.
